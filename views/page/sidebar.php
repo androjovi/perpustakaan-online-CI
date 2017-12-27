@@ -30,24 +30,38 @@
                 </li>
                 <li>
                     <a href="<?php echo site_url('buku'); ?>">
-                        <i class="pe-7s-note2"></i>
-                        <p>Peminjaman</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="<?php echo site_url('buku'); ?>">
-                        <i class="pe-7s-news-paper"></i>
+                        <i class="pe-7s-paper-plane"></i>
                         <p>Daftar buku</p>
                     </a>
                 </li>
                 <li>
+                    <a href="<?php echo site_url('peminjaman/list_peminjam'); ?>">
+                        <i class="pe-7s-note2"></i>
+                        <p>List peminjam</p>
+                    </a>
+                </li>
+                <!--
+                <li>
                     <a href="icons.html">
                         <i class="pe-7s-science"></i>
-                        <p>Daftar siswa</p>
+                        <p>list siswa</p>
+                    </a>
+                </li>
+-->
+                <li>
+                    <a href="<?php echo site_url('buku/list_buku'); ?>">
+                        <i class="pe-7s-note2"></i>
+                        <p>LIST BUKU</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo site_url('chart'); ?>">
+                        <i class="pe-7s-graph3"></i>
+                        <p>Chart</p>
                     </a>
                 </li>
 				<li class="active-pro">
-                    <a href="upgrade.html">
+                    <a href="javascript:void(0)" onclick="document.body.requestFullscreen()">
                         <i class="pe-7s-rocket"></i>
                         <p>Upgrade to PRO</p>
                     </a>

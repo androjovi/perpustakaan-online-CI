@@ -25,8 +25,10 @@
     <link href="<?php echo base_url('assets/css/demo.css'); ?>" rel="stylesheet" />
     <script src=" <?php echo base_url('assets/js/jquery.3.2.1.min.js') ; ?>" type="text/javascript"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="<?php echo base_url('assets/js/bootstrap.min.js'); ?>" type="text/javascript"></script>
 
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
     
 
 

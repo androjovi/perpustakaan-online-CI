@@ -8,7 +8,7 @@
                   dateFormat : "dd-mm-yy",
                   showAnim:""	,
                   minDate: -0, 
-                  maxDate: "+1M",
+                  maxDate: "+1D",
 
     });
 
@@ -35,15 +35,68 @@
         url : "<?php echo site_url('peminjaman/get_nis'); ?>",
         data : {nisk : nis},
         success : function(data){
-            $.each(data , function(i, n){
+            /* $.each(data , function(i, n){
                 $("#hasil_nis").append(
                     '<p>NIS : '+n.nis+'</p><p>KELAS : '+n.kelas+'</p><p>JURUSAN : '+n.jurusan+'</p>'
                 )
             } );
+            */
+            
+            console.log(data);
         }
       });
       $("#hasil_nis").empty();
   }
+      
+      function cek_kartu(){
+          var nomor = $("#input_anggota").val();
+          $.ajax({
+              type : "post",
+              dataType: "JSON",
+              url : "<?php echo site_url('peminjaman/get_kartu'); ?>",
+              data : {kartu : nomor},
+              success : function(data){
+            $.each(data , function(i, n){
+                $("#hasil_kartu").append(
+                    '<p>NIS : '+n.nis+'</p><p>NAMA : '+n.nama_lengkap+'</p><p>KELAS : '+n.kelas+'</p><p>JURUSAN : '+n.jurusan+'</p>'
+                )
+            } );
+            statn = 1;
+        }
+          })
+          $("#hasil_kartu").empty();
+      }
+      
+      function cek_buku(){
+          var buku = $("#input_buku").val();
+          
+          $.ajax({
+                type : "post" ,
+                 //dataType: "JSON",
+                url : "<?php echo site_url('peminjaman/get_buku'); ?>",
+                data : {kode_buku : buku },
+                success : function(data){
+                    $("#hasil_buku").html(data);
+                   /* $.each(data, function(i, n){
+                        $("#hasil_buku").append(
+                            '<p>JUDUL BUKU : '+n.judul_buku+'</p><p>KATEGORI BUKU :'+n.kategori_buku+'</p><p>PENGARANG BUKU : '+n.pengarang_buku+'</p>'
+                        )
+                     })*/
+                    
+                }
+          });
+          $("#hasil_buku").empty();
+      }
+      
+      function hapus_confirm(){
+  var msg;
+  msg= "Anda yakin data sudah benar ?? " ;
+  var agree=confirm(msg);
+  if (agree)
+  return true ;
+  else
+  return false ;
+}
   </script>
 
 <!-- load sidebar in page/sidebar -->
@@ -68,7 +121,7 @@
                     <p><?php echo  validation_errors(); ?></p>
                 <?php endif ?>
                 <form action=" <?php echo site_url('peminjaman/input'); ?> " method="post">
-                        <div class="row">
+                       <!-- <div class="row">
                             <div class="col-md-12">
                             <label>NIS</label>
                                 <div class="input-group">
@@ -81,16 +134,18 @@
                                 <div id="hasil_nis"></div>
                             </div>
                         </div>
+-->
 
                         <div class="row">
                             <div class="col-md-12">
                             <label>Nomor kartu anggota</label>
                                 <div class="input-group">
-                                    <input type="text" name="no_anggota" class="form-control" placeholder="Nomor keanggotaan" required>
+                                    <input type="text" name="no_anggota" id="input_anggota" class="form-control" placeholder="Nomor keanggotaan" required>
                                     <span class="input-group-btn">
-                                        <button class="btn btn-danger" type="button">CEK ANGGOTA</button>
+                                        <button class="btn btn-danger" onclick="cek_kartu()" type="button">CEK ANGGOTA</button>
                                     </span>
                                 </div>
+                                <div id="hasil_kartu"></div>
                             </div>
                         </div>
 
@@ -98,11 +153,12 @@
                             <div class="col-md-12">
                             <label>Kode buku</label>
                                 <div class="input-group">
-                                    <input type="text" name="kode_buku" class="form-control" placeholder="Kode buku" required>
+                                    <input type="text" name="kode_buku" id="input_buku" class="form-control" placeholder="Kode buku" required>
                                     <span class="input-group-btn">
-                                        <button class="btn btn-info" type="button">CEK BUKU</button>
+                                        <button class="btn btn-info" onclick="cek_buku()" type="button">CEK BUKU</button>
                                     </span>
                                 </div>
+                                <div id="hasil_buku"></div>
                             </div>
                         </div>
 
@@ -128,27 +184,25 @@
                                 <small style="font-size:10px;">Max peminjaman 2 minggu</small>
 
                             </div>
+                    </div>
                         
                                         
-                            <button type="submit" class="btn btn-info btn-fill pull-right">Submit</button>
+                            <button type="submit" id="tumbul" onclick="return hapus_confirm()" class="btn btn-info btn-fill pull-right" >Submit</button>
                             <?php if ( NULL !== $this->session->flashdata('message')){echo $this->session->flashdata('message');} ?>
-                        <div class="clearfix"></div>
-                        
-                        
-                        
-                    </form>
                 
-            </div>
-        </div>
+                            <div class="clearfix"></div>    
+                    
+                            </form>  
+                    
+            
         
-        
-        </div>
         
     </div>
     </div>
 </div>
 </div>
-
+</div>  
+</div>  
         <?php $this->load->view('page/footer'); ?>
 
 </body>

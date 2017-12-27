@@ -1,12 +1,7 @@
 <?php 
 class Daftar extends CI_Controller{
 
-    protected $table = array(
-        'buku'          => 'daftar_buku',
-        'peminjam'      => 'daftar_peminjam',
-        'kartu_anggota' => 'list_kartu_perpustakaan',
-        'siswa'         => 'list_siswa',
-    );
+    
 
     function __construct(){
         parent::__construct();

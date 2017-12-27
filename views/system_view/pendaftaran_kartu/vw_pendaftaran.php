@@ -3,23 +3,7 @@
 
 <script>
   $( function() {
-    $( "#datepicker" ).datepicker({
-        
-                  dateFormat : "dd-mm-yy",
-                  showAnim:""	,
-                  minDate: -0, 
-                  maxDate: "+1M",
-
-    });
-
-    $( "#datepicker2" ).datepicker({
-        
-                  dateFormat : "dd-mm-yy",
-                  showAnim:""	,
-                  minDate: -0, 
-                  maxDate: "+2W",
-
-    });
+    
     $(document).ready(function(){
         var campur = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZ";
         var panjang = 7;
@@ -38,7 +22,32 @@
         }
         $("#kode_random").val(prefix+"-"+random_all+""+concat_all);
     });
+      
   } );
+    function cek_nis(){
+      var nis = $("#input_nis").val();
+      $.ajax({
+        type : "post",
+        
+        url : "<?php echo site_url('peminjaman/get_nis'); ?>",
+        data : {nisk : nis},
+        success : function(data){
+           /* $.each(data , function(i, n){
+                $("#hasil_nis").append(
+                    '<p>NIS : '+n.nis+'</p><p>KELAS : '+n.kelas+'</p><p>JURUSAN : '+n.jurusan+'</p>'
+                )
+            } );
+            */
+            
+            $("#hasil_nis").html(data);
+        
+        $("#tumbul").removeAttr("disabled");
+        }
+      });
+      $("#hasil_nis").empty();
+        $("#tumbul").attr("disabled","true");
+  }
+    
   </script>
 
   
@@ -78,14 +87,15 @@
                             <div class="col-md-12">
                             <label>NIS</label>
                                 <div class="input-group">
-                                    <input type="text" name="nis" class="form-control" placeholder="Nomor keanggotaan" value=""<?php echo set_value('nis'); ?>>
+                                    <input type="text" name="nis" class="form-control" id="input_nis" placeholder="Nomor NIS" value=""<?php echo set_value('nis'); ?>>
                                     <span class="input-group-btn">
-                                        <button class="btn btn-danger" type="button">CEK NIS</button>
+                                        <button class="btn btn-danger" onclick="cek_nis()" type="button">CEK NIS</button>
                                     </span>
                                 </div>
+                                <div id="hasil_nis"></div>
                             </div>
                         </div>          
-                            <button type="submit" class="btn btn-info btn-fill pull-right">Submit</button>
+                            <button type="submit" id="tumbul" disabled="true" class="btn btn-info btn-fill pull-right">Submit</button>
                             <?php if ( NULL !== $this->session->flashdata('message')){echo $this->session->flashdata('message');} ?>
                         <div class="clearfix"></div>
                         
